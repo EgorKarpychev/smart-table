@@ -18,34 +18,19 @@ export function initFiltering(elements, indexes) {
 
     const applyFiltering = (query, state, action) => {
     // код с обработкой очистки поля
-    if (action && action.name === "clear") {
-      const field = action.dataset.field;
-      const parent = action.parentElement;
-      if (parent) {
-        const input = parent.querySelector("input, select");
-        if (input) {
-          input.value = "";
-          state[field] = "";
-        }
-      }
-    }
-
-    const applyFiltering = (query, state, action) => {
-        // код с обработкой очистки поля
-        // @todo: #4.2 — обработать очистку поля
-        if (action && action.name === "clear") {
-            const field = action.dataset.field;
-            const parent = action.closest(".filter");
-            const input = parent?.querySelector("input");
+    // @todo: #4.2 — обработать очистку поля
+      if (action && action.name === "clear") {
+          const field = action.dataset.field;
+          const parent = action.closest(".filter");
+          const input = parent?.querySelector("input");
       
-            if (input) {
-              input.value = "";
-            }
-            if (state && field) {
-              state[field] = "";
-            }
-        }
-
+          if (input) {
+            input.value = "";
+          }
+          if (state && field) {
+            state[field] = "";
+          }
+      }
         // @todo: #4.5 — отфильтровать данные, используя компаратор
         const filter = {};
         Object.keys(elements).forEach(key => {
@@ -63,5 +48,4 @@ export function initFiltering(elements, indexes) {
         updateIndexes,
         applyFiltering
     }
-  }
-} 
+}

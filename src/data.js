@@ -51,7 +51,7 @@ const getRecords = async (query, isUpdated = false) => {
         return lastResult;
     };
 
-return {
+export const initData = () => ({
     getIndexes,
     getRecords
-};
+});

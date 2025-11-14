@@ -42,16 +42,22 @@ export function initTable(settings, onAction) {
 
     const render = (data) => {
         // @todo: #1.1 — преобразовать данные в массив строк на основе шаблона rowTemplate
-        const nextRows = data.map(item => {
+        const nextRows = data.map((item) => {
             const row = cloneTemplate(rowTemplate);
-            Object.keys(item).forEach(key => {
-                if (row.elements[key].tagName === 'INPUT' || row.elements[key].tagName === 'SELECT' || row.elements[key].tagName === 'TEXTAREA') {
-                    row.elements[key].value = item[key];
-                } else {
-                    row.elements[key].textContent = item[key];
+
+            Object.keys(item).forEach((key) => {
+                if (row.elements[key]) {
+                    const el = row.elements[key];
+                    if (el.tagName === "INPUT" || el.tagName === "SELECT") {
+                        el.value = item[key];
+                    } else {
+                        el.textContent = item[key];
+                    }
                 }
-            })
-        })
+            });
+
+            return row.container;
+        });
         root.elements.rows.replaceChildren(...nextRows);
     }
 

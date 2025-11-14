@@ -1,6 +1,3 @@
-import './fonts/ys-display/fonts.css'
-import './style.css'
-
 import {data as sourceData} from "./data/dataset_1.js";
 
 import {initData} from "./data.js";
@@ -8,17 +5,22 @@ import {processFormData} from "./lib/utils.js";
 
 import {initTable} from "./components/table.js";
 // @todo: подключение
+import { initSearching } from "./components/searching.js";
+import { initPagination } from "./components/pagination.js";
+import { initSorting } from "./components/sorting.js";
+import { initFiltering } from "./components/filtering.js";
 
 
 // Исходные данные используемые в render()
 // const {data, ...indexes} = initData(sourceData);
-const api = initData(sourceData)
+const api = initData()
 
 /**
  * Сбор и обработка полей из таблицы
  * @returns {Object}
  */
 function collectState() {
+    const state = processFormData(new FormData(sampleTable.container));
     const rowsPerPage = parseInt(state.rowsPerPage);    // приведём количество страниц к числу
     const page = parseInt(state.page ?? 1);                // номер страницы по умолчанию 1 и тоже число
 
@@ -73,9 +75,7 @@ const applySorting = initSorting([        // Нам нужно передать 
     sampleTable.header.elements.sortByTotal
 ]);
 
-const {applyFiltering, updateIndexes} = initFiltering(sampleTable.filter.elements, {    // передаём элементы фильтра
-   searchBySeller: indexes.sellers                                    // для элемента с именем searchBySeller устанавливаем массив продавцов
-}); 
+const {applyFiltering, updateIndexes} = initFiltering(sampleTable.filter.elements, {})    // передаём элементы фильтра 
 
 const applySearching = initSearching('search');
 
